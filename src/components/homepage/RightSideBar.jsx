@@ -13,7 +13,7 @@ const RightSideBar = () => {
         <aside className="space-y-8">
             {/* Login Section */}
             <div>
-                <h2 className="font-bold text-xl mb-4 text-gray-800">Login With</h2>
+                <h2 className="font-bold text-xl mb-4 text-[#403F3F]">Login With</h2>
                 <div className="space-y-2">
                     <button className="btn btn-primary btn-outline w-full normal-case flex items-center gap-2">
                         <FaGoogle /> Login with Google

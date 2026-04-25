@@ -4,7 +4,6 @@ import React from 'react';
 import { FaRegBookmark, FaShareAlt, FaStar, FaEye } from 'react-icons/fa';
 
 const NewsCard = ({ news }) => {
-  // Destructure the data based on common API patterns
   const { title, author, image_url, details, rating, total_view } = news;
 
   return (
@@ -13,7 +12,7 @@ const NewsCard = ({ news }) => {
         <div className="flex items-center gap-3">
           <Image
             src={author?.img}
-            alt={author?.name}
+            alt={author?.name || "Author Image"}
             width={100}
             height={100}
             className="w-10 h-10 rounded-full object-cover"
@@ -29,12 +28,12 @@ const NewsCard = ({ news }) => {
         </div>
       </div>
 
-      
+
       <div className="p-5 space-y-4">
         <h2 className="card-title font-bold text-xl text-gray-800 leading-7">
           {title}
         </h2>
-        
+
         <figure className="relative h-fit w-full">
           <Image
             src={image_url}
@@ -48,7 +47,11 @@ const NewsCard = ({ news }) => {
         <p className="text-gray-600 text-sm leading-6 line-clamp-3">
           {details}
         </p>
-        <button className='btn bg-transparent text-[#FF8C47]'><Link href={`/news/${news._id}`}>Read More</Link></button>
+        <Link href={`/news/${news._id}`} className="inline-block">
+          <button className="btn bg-transparent text-[#FF8C47] border-[#FF8C47] hover:bg-[#FF8C47] hover:text-white">
+            Read More
+          </button>
+        </Link>
 
         <hr className="border-gray-200" />
 
@@ -63,7 +66,7 @@ const NewsCard = ({ news }) => {
             </div>
             <span className="text-gray-600 font-medium text-sm">{rating?.number}</span>
           </div>
-          
+
           <div className="flex items-center gap-2 text-gray-500">
             <FaEye />
             <span className="text-sm font-medium">{total_view}</span>

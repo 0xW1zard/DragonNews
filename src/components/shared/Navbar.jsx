@@ -6,10 +6,10 @@ import NavLink from './NavLink';
 
 const Navbar = () => {
 
-    const link =<>
-    <li><NavLink href="/">Home</NavLink></li>
-    <li><NavLink href="/about">About</NavLink></li>
-    <li><NavLink href="/career">Career</NavLink></li>
+    const link = <>
+        <li><NavLink href="/">Home</NavLink></li>
+        <li><NavLink href="/about">About</NavLink></li>
+        <li><NavLink href="/career">Career</NavLink></li>
     </>
     return (
         <div className='container mx-auto my-3'>
@@ -21,13 +21,13 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex="-1"
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                            className="flex flex-col dropdown-content bg-base-100 rounded-box z-20 mt-3 w-28  p-4 space-y-1 shadow">
                             {link}
                         </ul>
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
+                    <ul className="flex items-center gap-8 px-1">
                         {link}
                     </ul>
                 </div>
@@ -35,7 +35,12 @@ const Navbar = () => {
                     <div>
                         <Image src={User} alt="User" className="w-10 h-10 rounded-full" />
                     </div>
-                    <button><Link href="/login" className="btn bg-[#403F3F] text-white rounded-none px-10 ml-2 -mr-2">Login</Link></button>
+                    <Link
+                        href="/login"
+                        className="btn bg-[#403F3F] hover:bg-[#2b2a2a] text-white rounded-none px-10 ml-2"
+                    >
+                        Login
+                    </Link>
                 </div>
             </div>
         </div>

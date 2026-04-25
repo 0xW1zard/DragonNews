@@ -7,11 +7,14 @@ const NavLink = ({ href, children }) => {
     const pathname = usePathname();
 
     function isActive() {
-        return pathname === href;
+        if (href === pathname) return true;
+        if (href === '/' && pathname === '/category/01') return true;
+        return false;
     }
+
     return (
         <div>
-            <Link href={href} className={isActive() ? 'border-b-2 border-gray-500' : ''}>
+            <Link href={href} className={` block w-full h-full ${isActive() ? 'border-b-2 border-gray-500' : ''}`}>
                 {children}
             </Link>
         </div>
