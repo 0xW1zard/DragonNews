@@ -15,7 +15,7 @@ const RightSideBar = () => {
             <div>
                 <h2 className="font-bold text-xl mb-4 text-gray-800">Login With</h2>
                 <div className="space-y-2">
-                    <button className="btn btn-outline btn-info w-full normal-case flex items-center gap-2">
+                    <button className="btn btn-primary btn-outline w-full normal-case flex items-center gap-2">
                         <FaGoogle /> Login with Google
                     </button>
                     <button className="btn btn-outline w-full normal-case flex items-center gap-2">
