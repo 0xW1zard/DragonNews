@@ -1,16 +1,40 @@
 'use client';
+import { authClient } from '@/lib/auth-client';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const LoginPage = () => {
 
+    const [authError, setAuthError] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
+    const router = useRouter();
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-    }
+    const onSubmit = async (data) => {
+        const { email, password } = data;
 
+        const { data: res, error } = await authClient.signIn.email({
+            email: email,
+            password: password,
+            rememberMe: true,
+            callbackURL: "/",
+        });
+
+        console.log(res, error); 
+
+        if (error) {
+            setAuthError(error.message || "Something went wrong. Please try again.");
+            return;
+        }
+
+        if (res) {
+            setIsSuccess(true);
+            setTimeout(() => router.push("/"), 2000);
+        }
+    }
 
     return (
         <div className='min-h-screen flex items-center justify-center bg-[#F3F3F3] py-4 px-4'>
@@ -19,6 +43,17 @@ const LoginPage = () => {
                 <h1 className='text-2xl font-bold text-[#403F3F] text-center mb-4'>
                     Login your account
                 </h1>
+
+                {authError && (
+                    <div className="alert alert-warning rounded-none mb-4 py-2">
+                        <span className="text-sm font-medium">{authError}</span>
+                    </div>
+                )}
+                {isSuccess && (
+                    <div className="alert alert-success rounded-none mb-4 py-2">
+                        <span className="text-sm font-medium">SignIn Successful! Redirecting...</span>
+                    </div>
+                )}
 
                 <hr className='border-gray-200 mb-6' />
                 <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
