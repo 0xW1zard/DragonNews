@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { use, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const RegisterPage = () => {
 
+    const [isShowPassword, setIsShowPassword] = useState(false);
     const [authError, setAuthError] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
     const router = useRouter();
@@ -24,7 +26,7 @@ const RegisterPage = () => {
             callbackURL: "/",
         });
 
-        console.log(res, error); 
+        console.log(res, error);
 
         if (error) {
             setAuthError(error.message || "Something went wrong. Please try again.");
@@ -69,9 +71,9 @@ const RegisterPage = () => {
                             {...register("name", { required: "Name is required" })}
                         />
                         {
-                            errors.text && (
+                            errors.name && (
                                 <p className='text-red-500 text-sm mt-1'>
-                                    {errors.text.message}
+                                    {errors.name.message}
                                 </p>
                             )
                         }
@@ -104,14 +106,17 @@ const RegisterPage = () => {
                         }
                     </fieldset>
 
-                    <fieldset className="fieldset p-0 border-none">
+                    <fieldset className="fieldset p-0 border-none relative">
                         <legend className="fieldset-legend text-lg font-semibold text-[#403F3F] mb-1 px-0">Password</legend>
                         <input
-                            type="password"
+                            type={isShowPassword ? "text" : "password"}
                             className="input w-full bg-[#F3F3F3] border-none rounded-none h-11 px-4 focus:outline-none text-sm"
                             placeholder="Enter your password"
                             {...register("password", { required: "Password is required" })}
                         />
+                        <span onClick={() => setIsShowPassword(!isShowPassword)} className="absolute right-3 top-[50%] translate-y-[-50%] cursor-pointer text-sm text-gray-500" >{
+                            isShowPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+                        }</span>
                         {
                             errors.password && (
                                 <p className='text-red-500 text-sm mt-1'>
