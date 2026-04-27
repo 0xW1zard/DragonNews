@@ -4,9 +4,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { use, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 
 const RegisterPage = () => {
+
+    const handleGoogleLogin = async () => {
+        const data = await authClient.signIn.social({
+            provider: "google",
+        });
+        console.log(data);
+    }
+
+    const handleGithubLogin = async () => {
+        const data = await authClient.signIn.social({
+            provider: "github",
+        });
+        console.log(data);
+    }
 
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [authError, setAuthError] = useState("");
@@ -40,7 +55,7 @@ const RegisterPage = () => {
     }
 
     return (
-        <div className='min-h-screen flex items-center justify-center bg-[#F3F3F3] py-4 px-4'>
+        <div className='py-10 md:py-9 flex items-center justify-center bg-[#F3F3F3] px-4'>
 
             <div className='bg-white p-6 md:p-10 w-full max-w-150 rounded-sm shadow-sm'>
                 <h1 className='text-2xl font-bold text-[#403F3F] text-center mb-4'>
@@ -72,7 +87,7 @@ const RegisterPage = () => {
                         />
                         {
                             errors.name && (
-                                <p className='text-red-500 text-sm mt-1'>
+                                <p className='text-red-500 text-xs mt-1'>
                                     {errors.name.message}
                                 </p>
                             )
@@ -84,9 +99,19 @@ const RegisterPage = () => {
                         <input
                             type="text"
                             className="input w-full bg-[#F3F3F3] border-none rounded-none h-11 px-4 focus:outline-none text-sm"
-                            placeholder="Enter your photo URL"
-                            {...register("photo")}
+                            placeholder="https://example.com/photo.jpg"
+                            {...register("photo", {
+                                pattern: {
+                                    value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i,
+                                    message: "Please enter a valid image URL (http/https)"
+                                }
+                            })}
                         />
+                        {errors.photo && (
+                            <p className='text-red-500 text-xs mt-1'>
+                                {errors.photo.message}
+                            </p>
+                        )}
                     </fieldset>
 
                     <fieldset className="fieldset p-0 border-none">
@@ -99,7 +124,7 @@ const RegisterPage = () => {
                         />
                         {
                             errors.email && (
-                                <p className='text-red-500 text-sm mt-1'>
+                                <p className='text-red-500 text-xs mt-1'>
                                     {errors.email.message}
                                 </p>
                             )
@@ -119,7 +144,7 @@ const RegisterPage = () => {
                         }</span>
                         {
                             errors.password && (
-                                <p className='text-red-500 text-sm mt-1'>
+                                <p className='text-red-500 text-xs mt-1'>
                                     {errors.password.message}
                                 </p>
                             )
@@ -142,6 +167,23 @@ const RegisterPage = () => {
                         </button>
                     </div>
                 </form>
+
+                <div className='divider my-6'>Or Login With</div>
+
+                <div className="flex flex-col items-center gap-4 mt-6">
+
+                    <div className='flex justify-center items-center gap-6'>
+                        <div onClick={handleGoogleLogin} className="p-2 border border-gray-300 rounded-full hover:bg-gray-100 transition-all duration-200 cursor-pointer text-2xl shadow-sm"
+                            title="Login with Google">
+                            <FcGoogle />
+                        </div>
+
+                        <div onClick={handleGithubLogin} className="p-2 border border-gray-300 rounded-full hover:bg-gray-100 transition-all duration-200 cursor-pointer text-2xl shadow-sm"
+                            title="Login with GitHub" >
+                            <FaGithub />
+                        </div>
+                    </div>
+                </div>
 
                 <p className='text-center mt-4 text-sm font-semibold text-[#706F6F]'>
                     Already Have An Account?
