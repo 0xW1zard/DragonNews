@@ -9,7 +9,14 @@ import { FcGoogle } from 'react-icons/fc';
 
 const RegisterPage = () => {
 
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
     const handleGoogleLogin = async () => {
+        if (user) {
+            alert("You are already logged in.");
+            return;
+        }
         const data = await authClient.signIn.social({
             provider: "google",
         });
@@ -17,6 +24,10 @@ const RegisterPage = () => {
     }
 
     const handleGithubLogin = async () => {
+        if (user) {
+            alert("You are already logged in.");
+            return;
+        }
         const data = await authClient.signIn.social({
             provider: "github",
         });
@@ -102,8 +113,8 @@ const RegisterPage = () => {
                             placeholder="https://example.com/photo.jpg"
                             {...register("photo", {
                                 pattern: {
-                                    value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i,
-                                    message: "Please enter a valid image URL (http/https)"
+                                    value: /^https?:\/\/.+/i,
+                                    message: "Please enter a valid URL starting with http:// or https://"
                                 }
                             })}
                         />

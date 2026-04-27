@@ -12,18 +12,27 @@ import { authClient } from '@/lib/auth-client';
 
 const RightSideBar = () => {
 
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
     const handleGoogleLogin = async () => {
+        if (user) {
+            alert("You are already logged in.");
+            return;
+        }
         const data = await authClient.signIn.social({
             provider: "google",
         });
-        console.log(data);
     }
 
     const handleGithubLogin = async () => {
+        if (user) {
+            alert("You are already logged in.");
+            return;
+        }
         const data = await authClient.signIn.social({
             provider: "github",
         });
-        console.log(data);
     }
 
 

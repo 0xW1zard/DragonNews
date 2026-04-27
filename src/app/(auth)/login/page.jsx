@@ -10,7 +10,14 @@ import { FcGoogle } from 'react-icons/fc';
 
 const LoginPage = () => {
 
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
     const handleGoogleLogin = async () => {
+        if (user) {
+            alert("You are already logged in.");
+            return;
+        }
         const data = await authClient.signIn.social({
             provider: "google",
         });
@@ -18,6 +25,10 @@ const LoginPage = () => {
     }
 
     const handleGithubLogin = async () => {
+        if (user) {
+            alert("You are already logged in.");
+            return;
+        }
         const data = await authClient.signIn.social({
             provider: "github",
         });
